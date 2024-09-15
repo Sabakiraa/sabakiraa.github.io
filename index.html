@@ -9,16 +9,16 @@
   <h1>Blob Example</h1>
   <div id="chat"></div>
   <input type="text" id="messageInput" placeholder="Mesajınızı yazın..." />
-  <button onclick="sendMessage()">Gönder</button>
+  <button onclick="sendMessage()">Send</button>
 
   <script>
-    // Basit bir Blob nesnesi oluşturma
+   
     const blob = new Blob(["Hello, world!"], { type: 'text/plain' });
 
-    // Blob'u okuma
+    
     const reader = new FileReader();
     reader.onload = function(event) {
-      console.log(event.target.result);  // Blob'un içeriği burada
+      console.log(event.target.result);  
     };
     reader.readAsText(blob);
 
@@ -26,9 +26,9 @@
     const url = URL.createObjectURL(blob);
     const img = document.createElement('img');
     img.src = url;
-    document.body.appendChild(img); // URL'yi <img> etiketi ile HTML'e ekleme
+    document.body.appendChild(img); 
 
-    // Blob'u Fetch API ile kullanma
+   
     fetch('your-upload-url', {
       method: 'POST',
       body: blob,
@@ -40,9 +40,9 @@
     .then(data => console.log(data))
     .catch(error => console.error('Error:', error));
 
-    // Blob nesnesini dosya olarak kullanma
+    
     const file = new File(["Hello, world!"], "hello.txt", { type: 'text/plain' });
-    console.log(file); // Dosya nesnesini konsola yazdırma
+    console.log(file); 
 
     function sendMessage() {
       const input = document.getElementById('messageInput');
