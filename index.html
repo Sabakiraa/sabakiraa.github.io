@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blob Example</title>
+</head>
+<body>
+  <h1>Blob Example</h1>
+  <div id="chat"></div>
+  <input type="text" id="messageInput" placeholder="Mesajınızı yazın..." />
+  <button onclick="sendMessage()">Gönder</button>
+
+  <script>
+    // Basit bir Blob nesnesi oluşturma
+    const blob = new Blob(["Hello, world!"], { type: 'text/plain' });
+
+    // Blob'u okuma
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      console.log(event.target.result);  // Blob'un içeriği burada
+    };
+    reader.readAsText(blob);
+
+    // Blob'dan URL oluşturma
+    const url = URL.createObjectURL(blob);
+    const img = document.createElement('img');
+    img.src = url;
+    document.body.appendChild(img); // URL'yi <img> etiketi ile HTML'e ekleme
+
+    // Blob'u Fetch API ile kullanma
+    fetch('your-upload-url', {
+      method: 'POST',
+      body: blob,
+      headers: {
+        'Content-Type': 'text/plain'
+      }
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+
+    // Blob nesnesini dosya olarak kullanma
+    const file = new File(["Hello, world!"], "hello.txt", { type: 'text/plain' });
+    console.log(file); // Dosya nesnesini konsola yazdırma
+
+    function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const message = input.value;
+      socket.send(message);
+      input.value = '';
+    }
+  </script>
+</body>
+</html>
